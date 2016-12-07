@@ -13,6 +13,7 @@ public class UIPanel {
 
     private List<UIComponent> components = new ArrayList<UIComponent>();
     private Vector2i position,size;
+    private Color color;
     
     
     public UIPanel(Vector2i position, Vector2i size){

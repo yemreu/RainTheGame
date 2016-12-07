@@ -11,7 +11,6 @@ public class UILabel extends UIComponent {
     
     public String text;
     private Font font;
-    private Color color;
     
     public UILabel(Vector2i position, String text) {
         super(position);
