@@ -1,12 +1,15 @@
 
 package rain.graphics.ui;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import rain.graphics.Screen;
 import rain.util.Vector2i;
 
 
 public class UIComponent {
     
+    public Color color;
     public int backgroundColor;
     public Vector2i position, offset;
     
@@ -15,11 +18,16 @@ public class UIComponent {
         offset = new Vector2i();
     }
     
+    public UIComponent setColor(int color){
+        this.color = new Color(color);
+        return this;
+    }
+    
     public void update(){
         
     }
     
-    public void render(Screen screen){
+    public void render(Graphics g){
         
     }
     

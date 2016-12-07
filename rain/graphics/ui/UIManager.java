@@ -1,9 +1,9 @@
 
 package rain.graphics.ui;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
-import rain.graphics.Screen;
 
 public class UIManager {
     
@@ -23,9 +23,9 @@ public class UIManager {
         }
     }
     
-    public void render(Screen screen){
+    public void render(Graphics g){
         for(UIPanel panel : panels){
-            panel.render(screen);
+            panel.render(g);
         }
     }
 }

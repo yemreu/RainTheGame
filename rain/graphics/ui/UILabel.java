@@ -1,7 +1,9 @@
 
 package rain.graphics.ui;
 
-import rain.graphics.Font;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Font;
 import rain.graphics.Screen;
 import rain.util.Vector2i;
 
@@ -9,15 +11,24 @@ public class UILabel extends UIComponent {
     
     public String text;
     private Font font;
+    private Color color;
     
     public UILabel(Vector2i position, String text) {
         super(position);
-        font = new Font();
+        font = new Font("Helvetica",Font.PLAIN,32);
         this.text = text;
+        color = new Color(0xff00ff);
     }
     
-    public void render(Screen screen){
-        font.render(position.getX()+offset.getX(), position.getY()+offset.getY(),-4,0, text, screen);
+    public UILabel setFont(Font font){
+        this.font = font;
+        return this;
+    }
+    
+    public void render(Graphics g){
+        g.setFont(font);
+        g.setColor(color);
+        g.drawString(text, position.getX()+offset.getX(), position.getY()+offset.getY());
     }
     
 }

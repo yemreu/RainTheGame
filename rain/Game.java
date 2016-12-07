@@ -46,6 +46,7 @@ public class Game extends Canvas implements Runnable{
             
     public Game(){
         Dimension size = new Dimension(width*scale,height*scale);
+        //Dimension size = new Dimension(1920,1080);
         setPreferredSize(size);
         screen = new Screen(width,height);
         uiManager = new UIManager();
@@ -146,21 +147,23 @@ public class Game extends Canvas implements Runnable{
         double xScroll = player.getX() - screen.width / 2;
         double yScroll = player.getY() - screen.height / 2;
         level.render((int)xScroll, (int)yScroll, screen);
-        uiManager.render(screen);
         //font.render(50,50,-3,"Hey\nBro!\nWassup!",screen);
         for (int i = 0; i < pixels.length; i++) {
             pixels[i]=screen.pixels[i];
         }
         Graphics g = bs.getDrawGraphics();
+        g.fillRect(0,0,getWidth(),getHeight());
         g.drawImage(image, 0, 0, getWidth(),getHeight(),null);
-//        g.setColor(Color.WHITE);
-//        g.setFont(new Font("Verdana",0,9));
-//        g.drawString("X: " + (int)player.getX() + ", Y:" + (int)player.getY(),800,20);
-//        g.drawString("FPS: " + text_frames,800,30);
-//        g.drawString("UPS: " +text_updates,800,40);
-//        g.drawString("Mouse.X: "+Mouse.getX(), 800, 50);
-//        g.drawString("Mouse.Y: "+Mouse.getY(),800,60);
-//        g.drawString("Mouse.B: "+Mouse.getB(),800,70);
+        //g.drawImage(image, 0, 0, 1920,1080,null);
+        uiManager.render(g);
+        g.setColor(Color.WHITE);
+        g.setFont(new java.awt.Font("Verdana",0,9));
+        g.drawString("X: " + (int)player.getX() + ", Y:" + (int)player.getY(),5,20);
+        g.drawString("FPS: " + text_frames,5,30);
+        g.drawString("UPS: " +text_updates,5,40);
+        g.drawString("Mouse.X: "+Mouse.getX(), 5, 50);
+        g.drawString("Mouse.Y: "+Mouse.getY(),5,60);
+        g.drawString("Mouse.B: "+Mouse.getB(),5,70);
         g.dispose();
         bs.show();
     }

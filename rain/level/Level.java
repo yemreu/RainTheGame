@@ -72,7 +72,7 @@ public class Level {
             particles.get(i).update();
         }
         for (int i = 0; i < players.size(); i++) {
-            players.get(i).update();
+            players.get(i).update(); 
         }
         remove();
     }

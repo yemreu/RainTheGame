@@ -1,6 +1,8 @@
 
 package rain.graphics.ui;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import rain.graphics.Screen;
@@ -10,13 +12,13 @@ import rain.util.Vector2i;
 public class UIPanel {
 
     private List<UIComponent> components = new ArrayList<UIComponent>();
-    private Vector2i position;
+    private Vector2i position,size;
     
-    private Sprite sprite;
     
-    public UIPanel(Vector2i position){
+    public UIPanel(Vector2i position, Vector2i size){
         this.position = position;
-        sprite = new Sprite(80,168,0xcacaca);
+        this.size = size;
+        this.color = new Color(0xcacaca);
     }
     
     public void addComponent(UIComponent component){
@@ -30,10 +32,11 @@ public class UIPanel {
         }
     }
     
-    public void render(Screen screen){
-        screen.renderSprite(position.getX(),position.getY(),sprite,false);
+    public void render(Graphics g){
+        g.setColor(color);
+        g.fillRect(position.getX(),position.getY(), size.getX(),size.getY());
         for(UIComponent component : components){
-            component.render(screen);
+            component.render(g);
         }
     }
 }
