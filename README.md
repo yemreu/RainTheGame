@@ -1,3 +1,3 @@
 # RainTheGame
 
-2D Game Project by TheChernoProject https://www.youtube.com/user/TheChernoProject
+2D Game Development Series by TheChernoProject ~ https://www.youtube.com/user/TheChernoProject
