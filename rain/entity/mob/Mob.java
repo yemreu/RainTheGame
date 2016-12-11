@@ -1,20 +1,18 @@
 
 package rain.entity.mob;
 
-import java.util.List;
-import java.util.ArrayList;
+
 import rain.entity.Entity;
-import rain.entity.particle.Particle;
 import rain.entity.projectile.Projectile;
 import rain.entity.projectile.WizardProjectile;
 import rain.graphics.Screen;
-import rain.graphics.Sprite;
 
 public abstract class Mob extends Entity {
     
     
     protected boolean moving = false;
     protected boolean walking = false;
+    protected int health;
     
     protected enum Direction{
         UP,DOWN,LEFT,RIGHT

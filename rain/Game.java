@@ -41,7 +41,6 @@ public class Game extends Canvas implements Runnable{
     private Keyboard key;
     private Level level;
     private Player player;
-    private Font font;
     private static UIManager uiManager;
             
     public Game(){
@@ -56,7 +55,6 @@ public class Game extends Canvas implements Runnable{
         TileCoordinate playerSpawn = new TileCoordinate(19,42);
         player = new Player("TheNoob",playerSpawn.getX(),playerSpawn.getY(),key);
         level.add(player);
-        font  = new Font();
         addKeyListener(key);
         Mouse mouse = new Mouse();
         addMouseListener(mouse);

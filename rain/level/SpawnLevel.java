@@ -4,11 +4,9 @@ package rain.level;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import rain.entity.mob.Chaser;
 import rain.entity.mob.Dummy;
 import rain.entity.mob.Shooter;
-import rain.entity.mob.Star;
-import rain.level.tile.Tile;
+
 
 public class SpawnLevel extends Level{
     

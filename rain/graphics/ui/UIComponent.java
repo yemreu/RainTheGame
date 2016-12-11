@@ -10,8 +10,8 @@ import rain.util.Vector2i;
 public class UIComponent {
     
     public Color color;
-    public int backgroundColor;
-    public Vector2i position, offset;
+    public Vector2i position;
+    protected Vector2i offset;
     
     public UIComponent(Vector2i position){
         this.position = position;

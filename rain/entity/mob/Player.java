@@ -14,6 +14,7 @@ import rain.graphics.SpriteSheet;
 import rain.graphics.ui.UILabel;
 import rain.graphics.ui.UIManager;
 import rain.graphics.ui.UIPanel;
+import rain.graphics.ui.UIProgressBar;
 import rain.input.Keyboard;
 import rain.input.Mouse;
 import rain.util.Vector2i;
@@ -23,7 +24,6 @@ public class Player extends Mob {
     private String name;
     private Keyboard input;
     private Sprite sprite ;
-    private int anim=0;
     private boolean walking = false;
     private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down,32,32,3);
     private AnimatedSprite up = new AnimatedSprite(SpriteSheet.player_up,32,32,3);
@@ -33,12 +33,13 @@ public class Player extends Mob {
     private AnimatedSprite animSprite = down;
     
     private UIManager ui;
+    private UIProgressBar uiHealthBar;
     
     private int fireRate = 0;
     
     
     
-    
+    @Deprecated
     public Player(String name, Keyboard input){
         this.name = name;
         this.input = input;
@@ -61,6 +62,16 @@ public class Player extends Mob {
         nameLabel.setFont(new Font("Verdana",Font.PLAIN,24));
         nameLabel.dropShadow = true;
         panel.addComponent(nameLabel);
+        uiHealthBar = new UIProgressBar(new Vector2i(10,215), new Vector2i(80*3-20,20));
+        uiHealthBar.setColor(0x6a6a6a);
+        uiHealthBar.setForegroundColor(0xee3030);
+        panel.addComponent(uiHealthBar);
+        UILabel hpLabel = new UILabel(new Vector2i(uiHealthBar.position).add(new Vector2i(2,16)), "HP");
+        hpLabel.setColor(0xffffff);
+        hpLabel.setFont(new Font("Verdana",Font.PLAIN,18));
+        panel.addComponent(hpLabel);
+        //player default attributes
+        health = 100;
     }
     
     public String getName(){
@@ -96,6 +107,7 @@ public class Player extends Mob {
         }
         clear();
         updateShooting();
+        uiHealthBar.setProgress(health/100.0);
     }
     
     @Override
@@ -104,7 +116,7 @@ public class Player extends Mob {
         sprite = animSprite.getSprite();
         screen.renderMob((int)(x-16), (int)(y-16), sprite,flip);
     }
-
+    
     private void updateShooting() {
         if(Mouse.getB() == 1 && fireRate <= 0){
             double dx = Mouse.getX() - Game.getWindowWidth() / 2;
