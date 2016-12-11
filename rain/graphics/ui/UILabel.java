@@ -10,6 +10,8 @@ import rain.util.Vector2i;
 public class UILabel extends UIComponent {
     
     public String text;
+    public boolean dropShadow = false;
+    public int dropShadowOffset = 2;
     private Font font;
     
     public UILabel(Vector2i position, String text) {
@@ -25,6 +27,11 @@ public class UILabel extends UIComponent {
     }
     
     public void render(Graphics g){
+        if(dropShadow){
+            g.setFont(font);
+            g.setColor(Color.black);
+            g.drawString(text, position.getX()+offset.getX()+dropShadowOffset, position.getY()+offset.getY()+dropShadowOffset);
+        }
         g.setFont(font);
         g.setColor(color);
         g.drawString(text, position.getX()+offset.getX(), position.getY()+offset.getY());

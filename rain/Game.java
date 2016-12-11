@@ -27,8 +27,8 @@ import rain.level.TileCoordinate;
  
 public class Game extends Canvas implements Runnable{
     
-    private static int width = 300;
-    private static int height = width / 16 * 9;
+    private static int width = 300-80;
+    private static int height = 168;
     private static int scale = 3;
     public static String title = "Rain";
     
@@ -45,7 +45,7 @@ public class Game extends Canvas implements Runnable{
     private static UIManager uiManager;
             
     public Game(){
-        Dimension size = new Dimension(width*scale,height*scale);
+        Dimension size = new Dimension(width*scale+80*3,height*scale);
         //Dimension size = new Dimension(1920,1080);
         setPreferredSize(size);
         screen = new Screen(width,height);
@@ -54,7 +54,7 @@ public class Game extends Canvas implements Runnable{
         key = new Keyboard();
         level = Level.spawn;
         TileCoordinate playerSpawn = new TileCoordinate(19,42);
-        player = new Player(playerSpawn.getX(),playerSpawn.getY(),key);
+        player = new Player("TheNoob",playerSpawn.getX(),playerSpawn.getY(),key);
         level.add(player);
         font  = new Font();
         addKeyListener(key);
@@ -152,8 +152,9 @@ public class Game extends Canvas implements Runnable{
             pixels[i]=screen.pixels[i];
         }
         Graphics g = bs.getDrawGraphics();
+        g.setColor(new Color(0xff00ff));
         g.fillRect(0,0,getWidth(),getHeight());
-        g.drawImage(image, 0, 0, getWidth(),getHeight(),null);
+        g.drawImage(image, 0, 0, width*scale,height*scale,null);
         //g.drawImage(image, 0, 0, 1920,1080,null);
         uiManager.render(g);
         g.setColor(Color.WHITE);

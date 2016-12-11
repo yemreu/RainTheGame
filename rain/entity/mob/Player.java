@@ -1,6 +1,7 @@
 
 package rain.entity.mob;
 
+import java.awt.Font;
 import java.util.List;
 import rain.Game;
 import rain.entity.Entity;
@@ -19,6 +20,7 @@ import rain.util.Vector2i;
 
 public class Player extends Mob {
     
+    private String name;
     private Keyboard input;
     private Sprite sprite ;
     private int anim=0;
@@ -37,22 +39,32 @@ public class Player extends Mob {
     
     
     
-    public Player(Keyboard input){
+    public Player(String name, Keyboard input){
+        this.name = name;
         this.input = input;
         sprite = Sprite.player_forward;
 
     }
     
-    public Player(int x, int y, Keyboard input){
+    public Player(String name, int x, int y, Keyboard input){
+        this.name = name;
         this.x = x;
         this.y = y;
         this.input = input;
         sprite = Sprite.player_forward;
         fireRate = WizardProjectile.FIRE_RATE;
         ui = Game.getUIManager();
-        UIPanel panel = new UIPanel(new Vector2i((300-80)*3,0),new Vector2i(80*3,198*3));
+        UIPanel panel = (UIPanel) new UIPanel(new Vector2i((300-80)*3,0),new Vector2i(80*3,198*3)).setColor(0x4f4f4f);
         ui.addPanel(panel);
-        panel.addComponent(new UILabel(new Vector2i(10,30),"Hello").setColor(0));
+        UILabel nameLabel = new UILabel(new Vector2i(40,200),name);
+        nameLabel.setColor(0xbbbbbb);
+        nameLabel.setFont(new Font("Verdana",Font.PLAIN,24));
+        nameLabel.dropShadow = true;
+        panel.addComponent(nameLabel);
+    }
+    
+    public String getName(){
+        return name;
     }
     
     @Override
