@@ -15,6 +15,7 @@ import rain.graphics.ui.UILabel;
 import rain.graphics.ui.UIManager;
 import rain.graphics.ui.UIPanel;
 import rain.graphics.ui.UIProgressBar;
+import rain.graphics.ui.UIButton;
 import rain.input.Keyboard;
 import rain.input.Mouse;
 import rain.util.Vector2i;
@@ -34,6 +35,7 @@ public class Player extends Mob {
     
     private UIManager ui;
     private UIProgressBar uiHealthBar;
+    private UIButton button;
     
     private int fireRate = 0;
     
@@ -72,6 +74,9 @@ public class Player extends Mob {
         panel.addComponent(hpLabel);
         //player default attributes
         health = 100;
+        button = new UIButton(new Vector2i(10,260),new Vector2i(100,30));
+        button.setText("Hello");
+        panel.addComponent(button);
     }
     
     public String getName(){

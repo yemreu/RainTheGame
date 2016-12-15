@@ -9,7 +9,6 @@ import rain.util.Vector2i;
 public class UIProgressBar extends UIComponent {
     
     private double progress; //0.0 - 1.0
-    private Vector2i size;
     private Color foregroundColor;
     
     public UIProgressBar(Vector2i position, Vector2i size) {

@@ -35,7 +35,7 @@ public class Vector2i {
         return y;
     }
     
-    public Vector2i setY(int x){
+    public Vector2i setY(int y){
         this.y = y;
         return this;
     }
