@@ -11,6 +11,7 @@ import rain.graphics.AnimatedSprite;
 import rain.graphics.Screen;
 import rain.graphics.Sprite;
 import rain.graphics.SpriteSheet;
+import rain.graphics.ui.UIActionListener;
 import rain.graphics.ui.UILabel;
 import rain.graphics.ui.UIManager;
 import rain.graphics.ui.UIPanel;
@@ -74,7 +75,13 @@ public class Player extends Mob {
         panel.addComponent(hpLabel);
         //player default attributes
         health = 100;
-        button = new UIButton(new Vector2i(10,260),new Vector2i(100,30));
+        button = new UIButton(new Vector2i(10,260),new Vector2i(100,30),new UIActionListener() {
+            @Override
+            public void perform() {
+                System.out.println("Button pressed.");
+            }
+        }          
+);
         button.setText("Hello");
         panel.addComponent(button);
     }
