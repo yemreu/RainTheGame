@@ -35,7 +35,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        mouseB = -1;
+        mouseB = MouseEvent.NOBUTTON;
     }
 
     @Override

@@ -13,9 +13,8 @@ public class UIButtonListener {
     }
     
     public void pressed(UIButton button){
-    
+        button.setColor(0xcc2222);
     }
     public void released(UIButton button){
-    
     }
 }
