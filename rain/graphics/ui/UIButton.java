@@ -3,9 +3,11 @@ package rain.graphics.ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import rain.input.Mouse;
 import rain.util.Vector2i;
 
@@ -18,6 +20,7 @@ public class UIButton extends UIComponent {
     private boolean pressed = false;
     private boolean ignorePressed = false;
     private boolean ignoreAction = false;
+    private Image image;
     
     public UIButton(Vector2i position, Vector2i size, UIActionListener actionListener) {
         super(position,size);
@@ -28,13 +31,28 @@ public class UIButton extends UIComponent {
         label = new UILabel(lp,"");
         label.setColor(0x444444);
         label.active = false;
+        init();
+    }
+    
+    public UIButton(Vector2i position, BufferedImage image, UIActionListener actionListener){
+        super(position,new Vector2i(image.getWidth(),image.getHeight()));
+        this.actionListener = actionListener;
+        setImage(image);
+        init();
+    }
+    
+    private void init(){
         setColor(0xaaaaaa);
         buttonListener = new UIButtonListener();
     }
     
     void init(UIPanel panel){
         super.init(panel);
-        panel.addComponent(label);
+        if(label!=null) panel.addComponent(label);
+    }
+    
+    public void setImage(Image image){
+        this.image = image;
     }
     
     
@@ -94,9 +112,15 @@ public class UIButton extends UIComponent {
     
     @Override
     public void render(Graphics g) {
-        g.setColor(color);
-        g.fillRect(position.getX()+offset.getX(),position.getY()+offset.getY(), size.getX(),size.getY());
-        if(label!=null) label.render(g);
+        int x = position.getX()+offset.getX();
+        int y = position.getY()+offset.getY();
+        if(image!=null){
+            g.drawImage(image, x, y, null);
+        }else{
+            g.setColor(color);
+            g.fillRect(x,y, size.getX(),size.getY());
+            if(label!=null) label.render(g);
+        }
     }
 
     

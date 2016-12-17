@@ -2,7 +2,14 @@
 package rain.entity.mob;
 
 import java.awt.Font;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import rain.Game;
 import rain.entity.Entity;
 import rain.entity.projectile.Projectile;
@@ -40,6 +47,8 @@ public class Player extends Mob {
     private UIButton button;
     
     private int fireRate = 0;
+    
+    private BufferedImage image , imageHover ;
     
     
     
@@ -85,6 +94,50 @@ public class Player extends Mob {
 );
         button.setText("Hello");
         panel.addComponent(button);
+        
+        try {
+            image = ImageIO.read(getClass().getResource("/textures/home.png"));
+        } catch (IOException ex) {
+                ex.printStackTrace();
+        }
+        imageHover = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        int[] newPixels = ((DataBufferInt) imageHover.getRaster().getDataBuffer()).getData();
+        for (int yyy = 0; yyy < image.getHeight(); yyy++) {
+            for (int xxx = 0; xxx < image.getWidth(); xxx++) {
+                newPixels[xxx+yyy*image.getWidth()] =  image.getRGB(xxx, yyy);
+            }
+        }
+        
+        for (int yy = 0; yy < image.getHeight(); yy++) {
+            for (int xx = 0; xx < image.getWidth(); xx++) {
+                int color = newPixels[xx+yy*image.getWidth()];
+                int r = (color & 0xff0000) >> 16 ;
+                int g = (color & 0xff00) >> 8 ;
+                int b = color & 0xff ;
+                r+=100;
+                g+=100;
+                b+=100;
+                color &= 0xff000000;
+                newPixels[xx+yy*image.getWidth()] = color | r << 16 | g << 8 | b;
+            }
+        }
+        UIButton imageButton = new UIButton(new Vector2i(10,360),image,new UIActionListener() {
+                @Override
+                public void perform() {
+                    System.out.println("imageButton pressed.");
+                }
+            }
+            );      
+        imageButton.setButtonListener(new UIButtonListener(){
+            public void entered(UIButton button){
+                button.setImage(imageHover);
+            }
+
+            public void exited(UIButton button){
+                button.setImage(image);
+            }
+        });
+        panel.addComponent(imageButton);
     }
     
     public String getName(){
