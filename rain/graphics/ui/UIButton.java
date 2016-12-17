@@ -16,6 +16,8 @@ public class UIButton extends UIComponent {
     private UIActionListener actionListener;
     private boolean inside = false;
     private boolean pressed = false;
+    private boolean ignorePressed = false;
+    private boolean ignoreAction = false;
     
     public UIButton(Vector2i position, Vector2i size, UIActionListener actionListener) {
         super(position,size);
@@ -35,6 +37,7 @@ public class UIButton extends UIComponent {
         panel.addComponent(label);
     }
     
+    
     public void setButtonListener(UIButtonListener buttonListener){
         this.buttonListener = buttonListener;
     }
@@ -46,19 +49,39 @@ public class UIButton extends UIComponent {
             label.text = text;
     }
     
+    public void performAction() {
+        actionListener.perform();
+    }
+    
+    public void ignoreNextPress(){
+        ignoreAction = true;
+    }
+    
     @Override
     public void update(){
         Rectangle rect = new Rectangle(getAbsolutePosition().getX(),getAbsolutePosition().getY(),size.getX(),size.getY());
+        boolean leftMouseButtonDown = Mouse.getB() == MouseEvent.BUTTON1;
         if(rect.contains(new Point(Mouse.getX(),Mouse.getY()))){
-            if(!inside) buttonListener.entered(this);
+            if(!inside) {
+                if(leftMouseButtonDown) {
+                    ignorePressed = true;
+                }else ignorePressed = false;
+                
+                    buttonListener.entered(this);
+            }
             inside = true;
-            if(!pressed && Mouse.getB() == MouseEvent.BUTTON1){
+            if(!pressed && !ignorePressed && leftMouseButtonDown){
                 buttonListener.pressed(this);
                 pressed = true;
-            }else if(pressed && Mouse.getB() == MouseEvent.NOBUTTON){
-                buttonListener.released(this);
-                actionListener.perform();
-                pressed = false;
+            }else if(Mouse.getB() == MouseEvent.NOBUTTON){
+                if(pressed){
+                    buttonListener.released(this);
+                    if(!ignoreAction) {
+                        actionListener.perform();
+                    }else ignoreAction = false;
+                    pressed = false;
+                }
+                ignorePressed = false;
             }
         }else {
             if(inside) {
@@ -75,4 +98,6 @@ public class UIButton extends UIComponent {
         g.fillRect(position.getX()+offset.getX(),position.getY()+offset.getY(), size.getX(),size.getY());
         if(label!=null) label.render(g);
     }
+
+    
 }

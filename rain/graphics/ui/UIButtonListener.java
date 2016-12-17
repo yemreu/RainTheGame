@@ -16,5 +16,6 @@ public class UIButtonListener {
         button.setColor(0xcc2222);
     }
     public void released(UIButton button){
+        button.setColor(0xcdcdcd);
     }
 }
