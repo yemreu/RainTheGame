@@ -162,7 +162,7 @@ public class Game extends Canvas implements Runnable{
         g.drawString("UPS: " +text_updates,5,40);
         g.drawString("Mouse.X: "+Mouse.getX(), 5, 50);
         g.drawString("Mouse.Y: "+Mouse.getY(),5,60);
-        g.drawString("Mouse.B: "+Mouse.getB(),5,70);
+        g.drawString("Mouse.B: "+Mouse.getButton(),5,70);
         g.dispose();
         bs.show();
     }

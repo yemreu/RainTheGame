@@ -78,7 +78,7 @@ public class UIButton extends UIComponent {
     @Override
     public void update(){
         Rectangle rect = new Rectangle(getAbsolutePosition().getX(),getAbsolutePosition().getY(),size.getX(),size.getY());
-        boolean leftMouseButtonDown = Mouse.getB() == MouseEvent.BUTTON1;
+        boolean leftMouseButtonDown = Mouse.getButton() == MouseEvent.BUTTON1;
         if(rect.contains(new Point(Mouse.getX(),Mouse.getY()))){
             if(!inside) {
                 if(leftMouseButtonDown) {
@@ -91,7 +91,7 @@ public class UIButton extends UIComponent {
             if(!pressed && !ignorePressed && leftMouseButtonDown){
                 buttonListener.pressed(this);
                 pressed = true;
-            }else if(Mouse.getB() == MouseEvent.NOBUTTON){
+            }else if(Mouse.getButton() == MouseEvent.NOBUTTON){
                 if(pressed){
                     buttonListener.released(this);
                     if(!ignoreAction) {

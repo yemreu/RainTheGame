@@ -3,15 +3,9 @@ package rain.entity.mob;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import rain.Game;
-import rain.entity.Entity;
 import rain.entity.projectile.Projectile;
 import rain.entity.projectile.WizardProjectile;
 import rain.graphics.AnimatedSprite;
@@ -27,6 +21,7 @@ import rain.graphics.ui.UIButton;
 import rain.graphics.ui.UIButtonListener;
 import rain.input.Keyboard;
 import rain.input.Mouse;
+import rain.util.ImageUtils;
 import rain.util.Vector2i;
 
 public class Player extends Mob {
@@ -48,7 +43,7 @@ public class Player extends Mob {
     
     private int fireRate = 0;
     
-    private BufferedImage image , imageHover ;
+    private BufferedImage image;
     
     
     
@@ -100,27 +95,6 @@ public class Player extends Mob {
         } catch (IOException ex) {
                 ex.printStackTrace();
         }
-        imageHover = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        int[] newPixels = ((DataBufferInt) imageHover.getRaster().getDataBuffer()).getData();
-        for (int yyy = 0; yyy < image.getHeight(); yyy++) {
-            for (int xxx = 0; xxx < image.getWidth(); xxx++) {
-                newPixels[xxx+yyy*image.getWidth()] =  image.getRGB(xxx, yyy);
-            }
-        }
-        
-        for (int yy = 0; yy < image.getHeight(); yy++) {
-            for (int xx = 0; xx < image.getWidth(); xx++) {
-                int color = newPixels[xx+yy*image.getWidth()];
-                int r = (color & 0xff0000) >> 16 ;
-                int g = (color & 0xff00) >> 8 ;
-                int b = color & 0xff ;
-                r+=100;
-                g+=100;
-                b+=100;
-                color &= 0xff000000;
-                newPixels[xx+yy*image.getWidth()] = color | r << 16 | g << 8 | b;
-            }
-        }
         UIButton imageButton = new UIButton(new Vector2i(10,360),image,new UIActionListener() {
                 @Override
                 public void perform() {
@@ -130,10 +104,18 @@ public class Player extends Mob {
             );      
         imageButton.setButtonListener(new UIButtonListener(){
             public void entered(UIButton button){
-                button.setImage(imageHover);
+                button.setImage(ImageUtils.changeBrightness(image, -50));
             }
 
             public void exited(UIButton button){
+                button.setImage(image);
+            }
+            
+            public void pressed(UIButton button){
+                 button.setImage(ImageUtils.changeBrightness(image, 50));
+            }
+            
+            public void released(UIButton button){
                 button.setImage(image);
             }
         });
@@ -184,7 +166,8 @@ public class Player extends Mob {
     }
     
     private void updateShooting() {
-        if(Mouse.getB() == 1 && fireRate <= 0){
+        if(Mouse.getX() > 660) return;
+        if(Mouse.getButton() == 1 && fireRate <= 0){
             double dx = Mouse.getX() - Game.getWindowWidth() / 2;
             double dy = Mouse.getY()- Game.getWindowHeight() / 2;
             double dir = Math.atan2(dy, dx);
